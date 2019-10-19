@@ -25,7 +25,7 @@ export default new Router({
       name: routes.new,
       component: () => import(/* webpackChunkName: "about" */ './views/New.vue'),
       meta: {
-        title: 'Detail view'
+        title: 'Nuevo anime'
       }
     },
     {

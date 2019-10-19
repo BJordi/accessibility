@@ -5,10 +5,12 @@ import store from './store'
 import './firebase'
 
 import VueI18n from 'vue-i18n'
+import Vuelidate from 'vuelidate'
 
 import { messages } from './config/i18n'
 
 Vue.use(VueI18n)
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 

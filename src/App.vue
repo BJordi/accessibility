@@ -17,6 +17,7 @@ export default {
 
 <style lang="scss">
 @import './scss/application';
+
 .app-container {
   height: 100vh;
 }
