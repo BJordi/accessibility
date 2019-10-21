@@ -37,9 +37,12 @@
         label.label(for='new-description')
           | Descripción
         textarea.description-input(v-model='description' id='new-description' name='new-description')
+      .link-field
+        label.label(for='new-link')
+          | Link
+        input.input(v-model='link' id='new-link' name='new-link')
       button.main-button(type='submit')
         | Crear
-
 </template>
 
 <script>
@@ -60,6 +63,7 @@ export default {
       review: '',
       status: '',
       description: '',
+      link: '',
       formHasError: false,
       reviewValues,
       seenStatus
@@ -73,9 +77,6 @@ export default {
       between: between(0, 10)
     },
     status: {
-      required
-    },
-    description: {
       required
     }
   },

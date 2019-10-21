@@ -2,12 +2,12 @@
   .content
     button.back-button(type='button')
       img.icon(src='../assets/back-arrow-icon.svg' alt='Volver al listado' @click='goToList' id='back-arrow')
-      label.text(for='back-arrow')
+      span.text(for='back-arrow')
         | Volver
     h1.title
       | {{ title }}
     .data-container
-      img.image(:src='data.image' :alt='data.name')
+      img.image(:src='data.image' :alt='`Portada de ${data.name}`')
       h2.name
         | {{ data.name }}
       .stars-container
@@ -25,8 +25,8 @@
       p.text
         | {{ data.plot }}
       p.text
-        | Para más info, podés ingresar al
-        a(:href='anime.text')
+        | Para más info, podés ingresar a
+        a.link(:href='data.text')
           | artículo en Wikipedia
 </template>
 
@@ -112,9 +112,14 @@ export default {
       margin-bottom: 5px;
     }
 
-    .text {
+    .text,
+    .link {
       font-size: 1.2rem;
       line-height: 2rem;
+    }
+
+    .link {
+      margin-left: 5px;
     }
 
     .seen {
