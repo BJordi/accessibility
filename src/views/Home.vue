@@ -3,16 +3,15 @@
     .content
       h1.title
         | Anime list
-      .search-container
-        input.search-input(v-model='searchValue' @keypress.enter='search')
-        button.search-button(id='button-search' type='button' @click='search')
-          img.icon(src='../assets/search-icon.svg' alt='Buscar')
+      .filter-container
+        input.filter-input(v-model='filterValue' aria-label='Buscar')
+        img.icon(src='../assets/filter-icon.svg' alt='Buscar')
       h2.list-title
         | Mi lista
       .list-container
         template(v-if='filteredList.length > 0')
-          button.card(v-for='anime in filteredList' :key='anime.id' @click='goToDetail(anime.id)')
-            img.image(:src='anime.image')
+          router-link.card(v-for='anime in filteredList' :key='anime.id' @click='goToDetail(anime.id)' :to='{ name: routes.detail, params: { id: anime.id } }')
+            img.image(:src='anime.image' :alt='`Portada de ${anime.name}`')
             .description
               h3.card-title
                 | {{ anime.name }}
@@ -35,14 +34,15 @@ export default {
   name: 'home',
   data () {
     return {
-      searchValue: '',
-      animeList: []
+      filterValue: '',
+      animeList: [],
+      routes
     }
   },
   computed: {
     filteredList () {
       return this.animeList
-        .filter(item => item.name.toLowerCase().includes(this.searchValue.toLowerCase()))
+        .filter(item => item.name.toLowerCase().includes(this.filterValue.toLowerCase()))
         .sort((a, b) => a.name > b.name)
     }
   },
@@ -50,14 +50,6 @@ export default {
     db.collection('anime').get().then(querySnapshot => {
       querySnapshot.forEach(doc => this.animeList.push(doc.data()))
     })
-  },
-  methods: {
-    search () {
-      console.log('Acabo de buscar: ' + this.searchValue)
-    },
-    goToDetail (id) {
-      this.$router.push({ name: routes.detail, params: { id } })
-    }
   }
 }
 </script>
@@ -78,7 +70,7 @@ export default {
     width: 600px;
     padding: 30px;
 
-    .search-container {
+    .filter-container {
       align-items: center;
       border: 2px solid $dark-gray;
       border-radius: 10px;
@@ -86,16 +78,12 @@ export default {
       margin-bottom: 30px;
       padding: 5px 10px;
 
-      .search-input {
+      .filter-input {
         background: transparent;
         color: $black;
         font-size: 1rem;
         line-height: 1.75rem;
         width: 100%;
-      }
-
-      .search-button {
-        cursor: pointer;
       }
     }
 
@@ -117,6 +105,10 @@ export default {
         overflow: hidden;
         transition: box-shadow 0.3s;
         width: 100%;
+
+        &:focus {
+          outline: 1px solid $orange;
+        }
 
         &:not(:last-child) {
           margin-bottom: 10px;

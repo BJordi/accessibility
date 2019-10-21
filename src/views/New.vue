@@ -4,38 +4,39 @@
       h1.title
         | Nuevo anime
       .title-field
-        label.label
+        label.label(for='new-title')
           | Título
-        input.input(v-model='title')
-        span.error-msg(v-show='titleError')
-          | Hubo un error
-      .row.space-between
-        .column
-          .review-field.row
-            label.label
-              | Review
-            select.review-select(v-model='review')
-              option(disabled value='')
-                | Elegir valoración
-              option(v-for='review in reviewValues' :key='review.id' :value='review.value')
-                | {{ review.value }}
-          span.error-msg(v-show='reviewError')
-            | Hubo un error
-        .column
-          .status-field.column
-            label.label
-              | Estado
-            select.status-select(v-model='status')
-              option(disabled value='')
-                | Elegir estado
-              option(v-for='status in seenStatus' :key='status.id' :value='status.value')
-                | {{ status.optionLabel }}
-          span.error-msg(v-show='statusError')
-            | Hubo un error
+        input.input(v-model='title' id='new-title' name='new-title')
+        transition(name='fade')
+          span.error-msg(v-show='titleError' role='log' aria-live='polite')
+            | Este campo es obligatorio
+      .selects-container
+        .review-field
+          label.label(for='new-review')
+            | Review
+          select.review-select(v-model='review' id='new-review' name='new-review')
+            option(disabled value='')
+              | Elegir valoración
+            option(v-for='review in reviewValues' :key='review.id' :value='review.value')
+              | {{ review.value }}
+          transition(name='fade')
+            span.error-msg(v-show='reviewError' role='log' aria-live='polite')
+              | El valor debe estar entre 1 y 10
+        .status-field
+          label.label(for='new-status')
+            | Estado
+          select.status-select(v-model='status' id='new-status' name='new-status')
+            option(disabled value='')
+              | Elegir estado
+            option(v-for='status in seenStatus' :key='status.id' :value='status.value')
+              | {{ status.optionLabel }}
+          transition(name='fade')
+            span.error-msg(v-show='statusError' role='log' aria-live='polite')
+              | Este campo es obligatorio
       .description-field
-        label.label
+        label.label(for='new-description')
           | Descripción
-        textarea.description-input(v-model='description')
+        textarea.description-input(v-model='description' id='new-description' name='new-description')
       button.main-button(type='submit')
         | Crear
 
@@ -55,7 +56,7 @@ export default {
   },
   data () {
     return {
-      title: 'h',
+      title: '',
       review: '',
       status: '',
       description: '',
@@ -108,63 +109,46 @@ export default {
 
 .new-container {
   @extend .main-container;
-  background: url('../assets/green-plain.jpg') no-repeat center center;
+  background: url('../assets/green-plain.jpg') $dark-gray no-repeat center center;
 
   .new-form {
     background: $white;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    max-width: 460px;
     padding: 30px;
-    min-width: 460px;
+    width: 100%;
 
     .title-field {
       @extend .column;
       margin-bottom: 20px;
-
-      .label {
-        margin-bottom: 10px;
-      }
 
       .input {
         @extend .base-input;
       }
     }
 
-    .review-field {
+    .selects-container {
       @extend .row;
-      @extend .middle;
-      margin-bottom: 20px;
+      @extend .space-between;
+      @extend .top;
 
-      .label {
-        margin-right: 10px;
-      }
+      .review-field,
+      .status-field {
+        @extend .column;
+        margin-bottom: 20px;
+        width: 160px;
 
-      .review-select {
-        @extend .base-input;
-      }
-    }
-
-    .status-field {
-      @extend .row;
-      @extend .middle;
-      margin-bottom: 20px;
-
-      .label {
-        margin-right: 10px;
-      }
-
-      .status-select {
-        @extend .base-input;
+        .review-select,
+        .status-select {
+          @extend .base-input;
+        }
       }
     }
 
     .description-field {
       margin-bottom: 20px;
-
-      .label {
-        margin-bottom: 10px;
-      }
 
       .description-input {
         @extend .base-input;
@@ -176,6 +160,41 @@ export default {
     .label {
       font-size: 1rem;
       line-height: 1.5rem;
+    }
+
+    .error-msg {
+      margin-top: 5px;
+    }
+
+    .main-button {
+      align-self: flex-end;
+      width: 120px;
+    }
+  }
+
+  .label {
+    margin-bottom: 5px;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .new-container {
+    .new-form {
+      .selects-container {
+        flex-direction: column;
+
+        .review-field,
+        .status-field {
+          width: 100%;
+        }
+      }
     }
   }
 }

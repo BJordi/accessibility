@@ -24,6 +24,10 @@
         | Argumento
       p.text
         | {{ data.plot }}
+      p.text
+        | Para más info, podés ingresar al
+        a(:href='anime.text')
+          | artículo en Wikipedia
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template lang="pug">
-nav.navbar(role='navigation' aria-label='Navegación principal')
-  ul.menu-bar(role='menu-bar' aria-label='Navegación principal')
+nav.navbar(aria-label='Navegación principal')
+  ul.menu-bar(aria-label='Navegación principal')
     li.menu-item-li(v-for='item in navbarItems' :key='item.id')
       router-link.menu-item(:to='{ name: item.to }' exact-active-class='active-route')
         span.menu-item-label
