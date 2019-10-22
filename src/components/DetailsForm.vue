@@ -1,13 +1,13 @@
 <template lang="pug">
   .content
     button.back-button(type='button')
-      img.icon(src='../assets/back-arrow-icon.svg' alt='Volver al listado' @click='goToList' id='back-arrow')
+      img.icon(src='../assets/back-arrow-icon.svg' @click='goToList' id='back-arrow')
       span.text(for='back-arrow')
         | Volver
     h1.title
       | {{ title }}
     .data-container
-      img.image(v-if='data.image' :src='data.image' :alt='`Portada de ${data.name}`')
+      img.image(v-if='data.image' :src='data.image')
       h2.name
         | {{ data.name }}
       .stars-container

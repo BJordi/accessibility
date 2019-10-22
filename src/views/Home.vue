@@ -5,13 +5,13 @@
         | Anime list
       .filter-container
         input.filter-input(v-model='filterValue' aria-label='Buscar')
-        img.icon(src='../assets/filter-icon.svg' alt='Buscar')
+        img.icon(src='../assets/filter-icon.svg')
       h2.list-title
         | Mi lista
       .list-container
         template(v-if='filteredList.length > 0')
           router-link.card(v-for='anime in filteredList' :key='anime.id' @click='goToDetail(anime.id)' :to='{ name: routes.detail, params: { id: anime.id } }')
-            img.image(:src='anime.image || defaultIcon' :alt='`Portada de ${anime.name}`')
+            img.image(:src='anime.image || defaultIcon')
             .description
               h3.card-title
                 | {{ anime.name }}
@@ -19,7 +19,7 @@
                 | {{ anime.reviewStars }} / 10
         template(v-else)
           .empty-container
-            img.image(src='../assets/add-to-list.svg' alt='Lista vacía')
+            img.image(src='../assets/add-to-list.svg')
             h3.empty-title
               | ¿Qué esperas?
             span.empty-subtitle
