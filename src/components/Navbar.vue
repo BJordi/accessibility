@@ -34,14 +34,13 @@ export default {
     list-style: none;
 
     .menu-item-li {
-      cursor: pointer;
-
       &:not(:last-child) {
         margin-right: 10px;
       }
 
       .menu-item {
         align-items: center;
+        cursor: default;
         display: flex;
         padding: 0 5px;
 

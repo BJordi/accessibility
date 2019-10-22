@@ -25,9 +25,9 @@
       p.text
         | {{ data.plot }}
       p.text
-        | Para más info, podés ingresar a
+        | Para más info, podés ingresar
         a.link(:href='data.text')
-          | artículo en Wikipedia
+          | aquí
 </template>
 
 <script>
@@ -64,7 +64,6 @@ export default {
   padding: 30px;
 
   .back-button {
-    cursor: pointer;
     display: flex;
 
     .icon {
@@ -116,9 +115,11 @@ export default {
     .link {
       font-size: 1.2rem;
       line-height: 2rem;
+      text-align: justify;
     }
 
     .link {
+      color: $black;
       margin-left: 5px;
     }
 

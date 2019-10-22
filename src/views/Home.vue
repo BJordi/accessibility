@@ -104,21 +104,13 @@ export default {
       .card {
         border: 1px solid $light-gray;
         border-radius: 10px;
+        cursor: default;
         display: flex;
         overflow: hidden;
-        transition: box-shadow 0.3s;
         width: 100%;
 
         &:not(:last-child) {
           margin-bottom: 10px;
-        }
-
-        &:hover {
-          box-shadow: 0 4px 8px 0 rgba(12, 0, 51, 0.1);
-
-          .card-title {
-            color: $blue;
-          }
         }
 
         .image {
