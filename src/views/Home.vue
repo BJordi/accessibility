@@ -11,7 +11,7 @@
       .list-container
         template(v-if='filteredList.length > 0')
           router-link.card(v-for='anime in filteredList' :key='anime.id' @click='goToDetail(anime.id)' :to='{ name: routes.detail, params: { id: anime.id } }')
-            img.image(:src='anime.image || defaultIcon' :alt='`Portada de ${anime.name}`')
+            img.image(:src='anime.image || defaultIcon' alt='')
             .description
               h3.card-title
                 | {{ anime.name }}
