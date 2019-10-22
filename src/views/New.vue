@@ -8,7 +8,7 @@
           | Título
         input.input(v-model='name' id='new-name' name='new-name')
         transition(name='fade')
-          span.error-msg(v-show='nameError' role='log' aria-live='polite')
+          span.error-msg(v-show='nameError' role='log')
             | Este campo es obligatorio
       .selects-container
         .review-field
@@ -20,7 +20,7 @@
             option(v-for='review in reviewValues' :key='review.id' :value='review.value')
               | {{ review.value }}
           transition(name='fade')
-            span.error-msg(v-show='reviewStarsError' role='log' aria-live='polite')
+            span.error-msg(v-show='reviewStarsError' role='log')
               | El valor debe estar entre 1 y 10
         .status-field
           label.label(for='new-status')
@@ -31,7 +31,7 @@
             option(v-for='status in seenStatus' :key='status.id' :value='status.value')
               | {{ status.optionLabel }}
           transition(name='fade')
-            span.error-msg(v-show='statusError' role='log' aria-live='polite')
+            span.error-msg(v-show='statusError' role='log')
               | Este campo es obligatorio
       .plot-field
         label.label(for='new-plot')
@@ -42,7 +42,7 @@
           | Link
         input.input(v-model='link' id='new-link' name='new-link')
       transition(name='fade')
-        .success-field(v-if='showSuccess' aria-live='polite')
+        .success-field(v-if='showSuccess')
           span.success-text
             | El animé fue agregado con éxito.
       button.main-button(type='submit')

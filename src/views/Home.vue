@@ -4,7 +4,7 @@
       h1.title
         | Anime list
       .filter-container
-        input.filter-input(v-model='filterValue' aria-label='Buscar')
+        input.filter-input(v-model='filterValue')
         img.icon(src='../assets/filter-icon.svg')
       h2.list-title
         | Mi lista
