@@ -109,10 +109,6 @@ export default {
         transition: box-shadow 0.3s;
         width: 100%;
 
-        &:focus {
-          outline: 1px solid $orange;
-        }
-
         &:not(:last-child) {
           margin-bottom: 10px;
         }

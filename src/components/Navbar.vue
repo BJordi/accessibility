@@ -24,10 +24,6 @@ export default {
 @import 'src/scss/variables/colors';
 @import 'src/scss/commons/miscellaneous';
 
-li > a:focus {
-  border: 1px dotted orange;
-}
-
 .navbar {
   background: $white;
   position: fixed;
