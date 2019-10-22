@@ -48,7 +48,7 @@ export default {
   },
   mounted () {
     db.collection('anime').get().then(querySnapshot => {
-      querySnapshot.forEach(doc => this.animeList.push(doc.data()))
+      querySnapshot.forEach(doc => this.animeList.push({ id: doc.id, ...doc.data() }))
     })
   }
 }

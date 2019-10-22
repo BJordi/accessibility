@@ -3,24 +3,24 @@
     form.new-form(@submit.prevent='submitNewAnime')
       h1.title
         | Nuevo anime
-      .title-field
-        label.label(for='new-title')
+      .name-field
+        label.label(for='new-name')
           | Título
-        input.input(v-model='title' id='new-title' name='new-title')
+        input.input(v-model='name' id='new-name' name='new-name')
         transition(name='fade')
-          span.error-msg(v-show='titleError' role='log' aria-live='polite')
+          span.error-msg(v-show='nameError' role='log' aria-live='polite')
             | Este campo es obligatorio
       .selects-container
         .review-field
           label.label(for='new-review')
             | Review
-          select.review-select(v-model='review' id='new-review' name='new-review')
-            option(disabled value='')
+          select.review-select(v-model='reviewStars' id='new-review' name='new-review')
+            option(disabled :value='null')
               | Elegir valoración
             option(v-for='review in reviewValues' :key='review.id' :value='review.value')
               | {{ review.value }}
           transition(name='fade')
-            span.error-msg(v-show='reviewError' role='log' aria-live='polite')
+            span.error-msg(v-show='reviewStarsError' role='log' aria-live='polite')
               | El valor debe estar entre 1 y 10
         .status-field
           label.label(for='new-status')
@@ -33,20 +33,25 @@
           transition(name='fade')
             span.error-msg(v-show='statusError' role='log' aria-live='polite')
               | Este campo es obligatorio
-      .description-field
-        label.label(for='new-description')
+      .plot-field
+        label.label(for='new-plot')
           | Descripción
-        textarea.description-input(v-model='description' id='new-description' name='new-description')
+        textarea.plot-input(v-model='plot' id='new-plot' name='new-plot')
       .link-field
         label.label(for='new-link')
           | Link
         input.input(v-model='link' id='new-link' name='new-link')
+      transition(name='fade')
+        .success-field(v-if='showSuccess' aria-live='polite')
+          span.success-text
+            | El animé fue agregado con éxito.
       button.main-button(type='submit')
         | Crear
 </template>
 
 <script>
 import { required, between } from 'vuelidate/lib/validators'
+import { db } from '../firebase'
 
 import Navbar from '@/components/Navbar.vue'
 
@@ -59,21 +64,22 @@ export default {
   },
   data () {
     return {
-      title: '',
-      review: '',
+      name: '',
+      reviewStars: null,
       status: '',
-      description: '',
+      plot: '',
       link: '',
       formHasError: false,
       reviewValues,
-      seenStatus
+      seenStatus,
+      showSuccess: false
     }
   },
   validations: {
-    title: {
+    name: {
       required
     },
-    review: {
+    reviewStars: {
       between: between(0, 10)
     },
     status: {
@@ -81,23 +87,34 @@ export default {
     }
   },
   computed: {
-    titleError () {
-      return this.formHasError && !this.$v.title.required
+    nameError () {
+      return this.formHasError && !this.$v.name.required
     },
-    reviewError () {
-      return this.formHasError && !this.$v.review.between
+    reviewStarsError () {
+      return this.formHasError && !this.$v.reviewStars.between
     },
     statusError () {
       return this.formHasError && !this.$v.status.required
     }
   },
   methods: {
+    clearValues () {
+      this.name = ''
+      this.reviewStars = null
+      this.status = ''
+      this.plot = ''
+      this.link = ''
+    },
     submitNewAnime () {
-      if (!this.$v.$error) {
+      if (this.$v.$invalid) {
         this.formHasError = true
       } else {
+        const { name, reviewStars, status, plot, link } = this
         this.formHasError = false
-        console.log('Creé un nuevo anime')
+        db.collection('anime').add({ name, reviewStars, status, plot, link })
+        this.showSuccess = true;
+        this.clearValues()
+        setTimeout(() => this.showSuccess = false, 5000)
       }
     }
   }
@@ -121,7 +138,7 @@ export default {
     padding: 30px;
     width: 100%;
 
-    .title-field {
+    .name-field {
       @extend .column;
       margin-bottom: 20px;
 
@@ -148,13 +165,28 @@ export default {
       }
     }
 
-    .description-field {
+    .plot-field {
       margin-bottom: 20px;
 
-      .description-input {
+      .plot-input {
         @extend .base-input;
         resize: none;
         width: 100%;
+      }
+    }
+
+    .link-field {
+      @extend .column;
+      margin-bottom: 20px;
+
+      .input {
+        @extend .base-input;
+      }
+    }
+
+    .success-field {
+      .success-text {
+        color: $green;
       }
     }
 

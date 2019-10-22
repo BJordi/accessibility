@@ -17,11 +17,9 @@ export default {
   },
   mounted () {
     db.collection('anime')
-      .where('id', '==', parseInt(this.$route.params.id))
+      .doc(`${this.$route.params.id}`)
       .get()
-      .then(querySnapshot => querySnapshot.forEach(doc => {
-        this.query = doc.data()
-      }))
+      .then(doc => this.query = doc.data())
   }
 }
 </script>
