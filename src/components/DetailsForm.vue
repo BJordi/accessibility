@@ -7,7 +7,7 @@
     h1.title
       | {{ title }}
     .data-container
-      img.image(:src='data.image' :alt='`Portada de ${data.name}`')
+      img.image(v-if='data.image' :src='data.image' :alt='`Portada de ${data.name}`')
       h2.name
         | {{ data.name }}
       .stars-container
