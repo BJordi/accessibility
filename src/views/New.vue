@@ -112,9 +112,9 @@ export default {
         const { name, reviewStars, status, plot, link } = this
         this.formHasError = false
         db.collection('anime').add({ name, reviewStars, status, plot, link })
-        this.showSuccess = true;
+        this.showSuccess = true
         this.clearValues()
-        setTimeout(() => this.showSuccess = false, 5000)
+        setTimeout(() => { this.showSuccess = false }, 5000)
       }
     }
   }

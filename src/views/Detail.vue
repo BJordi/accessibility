@@ -19,7 +19,7 @@ export default {
     db.collection('anime')
       .doc(`${this.$route.params.id}`)
       .get()
-      .then(doc => this.query = doc.data())
+      .then(doc => { this.query = doc.data() })
   }
 }
 </script>
