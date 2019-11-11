@@ -19,7 +19,7 @@ export default {
     db.collection('anime')
       .doc(`${this.$route.params.id}`)
       .get()
-      .then(doc => this.query = doc.data())
+      .then(doc => { this.query = doc.data() })
   }
 }
 </script>
@@ -27,7 +27,6 @@ export default {
 <style lang="scss" scoped>
 @import 'src/scss/commons/miscellaneous';
 @import 'src/scss/variables/colors';
-
 
 .detail-container {
   @extend .main-container;
